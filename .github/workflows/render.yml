@@ -26,9 +26,9 @@ jobs:
           npm install
           npx remotion browser install
 
-      - name: Render Video via Package Script
+      - name: Render Video Directly From Root
         run: |
-          npm run render
+          npx remotion render index.ts JBFlyover out/jb-flyover.mp4 --gl=swangle --codec=h264 --crf=16
 
       - name: Upload Finished Video to Browser
         uses: actions/upload-artifact@v4
