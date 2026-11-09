@@ -26,14 +26,13 @@ jobs:
           npm install
           npx remotion browser install
 
-      - name: Render 60fps MP4 File
+      - name: Render Video via Package Script
         run: |
-          npx remotion render --gl=swangle src/index.ts JBFlyover out/jb-flyover.mp4
+          npm run render
 
       - name: Upload Finished Video to Browser
         uses: actions/upload-artifact@v4
         with:
           name: jb-automations-video
-          path: out/jb-flyover.mp4
+          path: out/
           retention-days: 5
-
