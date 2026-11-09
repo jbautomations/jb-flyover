@@ -1,0 +1,33 @@
+name: Render JB Automations Video
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Graphic Dependencies
+        run: |
+          npm install
+          npx remotion browser install
+
+      - name: Render 60fps MP4 File
+        run: |
+          npx remotion render src/index.ts JBFlyover out/jb-flyover.mp4 --codec=h264
+
+      - name: Upload Finished Video to Browser
+        uses: actions/upload-artifact@v4
+        with:
+          name: jb-automations-video
+          path: out/jb-flyover.mp4
+          retention-days: 5
