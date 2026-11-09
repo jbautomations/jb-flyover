@@ -16,14 +16,19 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Graphic Dependencies
+      - name: Install System Browser Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgbm-dev libasound2t64 libnspr4 libnss3
+
+      - name: Install Project Dependencies
         run: |
           npm install
           npx remotion browser install
 
       - name: Render 60fps MP4 File
         run: |
-          npx remotion render src/index.ts JBFlyover out/jb-flyover.mp4 --codec=h264
+          npx remotion render src/index.ts JBFlyover out/jb-flyover.mp4 --gl=swangle
 
       - name: Upload Finished Video to Browser
         uses: actions/upload-artifact@v4
